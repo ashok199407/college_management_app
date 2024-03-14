@@ -32,6 +32,6 @@ services:
       POSTGRES_USER: ashok
       POSTGRES_PASSWORD: ashok123
     networks:
-      - mynetwork
+    - mynetwork
 volumes:
   postgres_data:

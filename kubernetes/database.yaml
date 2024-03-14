@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: collegeapp-db-deploymet
   labels:
-    name: postgress
+    app: postgress
     project: django
     tier: db
   namespace: django
@@ -11,13 +11,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: postgress
+      app: postgress
       project: django
       tier: db
   template:
     metadata:
       labels:
-        name: postgress
+        app: postgress
         project: django
         tier: db
     spec:
@@ -40,6 +40,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: college-app-db-secrets
+  namespace: django
 type: Opaque
 data:
   POSTGRES_DB: bXlhcHBfZGIK
@@ -50,9 +51,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: college-app-db-service
+  namespace: django
 spec:
   selector:
-    name: postgress
+    app: postgress
     project: django
     tier: db 
   ports:

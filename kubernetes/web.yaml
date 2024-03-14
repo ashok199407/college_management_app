@@ -28,7 +28,7 @@ spec:
         envFrom:
         - configMapRef:
             name: collegeapp-web-configmap
-        - secretKeyRef:
+        - secretRef:
             name: collegeapp-web-secrets
         resources:
           requests:

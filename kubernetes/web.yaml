@@ -27,9 +27,9 @@ spec:
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
-            name: collegeapp-configmap
+            name: collegeapp-web-configmap
         - secretKeyRef:
-            name: collegeapp-secrets
+            name: collegeapp-web-secrets
         resources:
           requests:
             memory: "64Mi"

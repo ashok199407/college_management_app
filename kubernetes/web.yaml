@@ -44,7 +44,7 @@ metadata:
   name: collegeapp-web-configmap
   namespace: django
 data:
-  DB_HOST: Postgresscollegeapp-db-deploymet
+  DB_HOST: college-app-db-service
   DB_PORT: "5432"
   DB_NAME: myapp_db
   EMAIL_FROM_ADDRESS: Django LMS <chakravarthyashok41@gmail.com>

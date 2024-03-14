@@ -25,9 +25,13 @@ spec:
       - name: postgress
         image: postgres:12
         imagePullPolicy: Always
-        envFrom:
-        - secretRef:
-            name: college-app-db-secrets 
+        env:
+        - name: POSTGRES_DB
+          value: myapp_db
+        - name: POSTGRES_USER
+          value: ashok
+        - name: POSTGRES_PASSWORD
+          value: ashok123
         resources:
           requests:
             memory: "64Mi"
@@ -35,17 +39,6 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: college-app-db-secrets
-  namespace: django
-type: Opaque
-data:
-  POSTGRES_DB: bXlhcHBfZGIK
-  POSTGRES_USER: YXNob2sK
-  POSTGRES_PASSWORD: YXNob2sxMjMK
 ---
 apiVersion: v1
 kind: Service

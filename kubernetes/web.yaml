@@ -28,8 +28,6 @@ spec:
         envFrom:
         - configMapRef:
             name: collegeapp-web-configmap
-        - secretRef:
-            name: collegeapp-web-secrets
         resources:
           requests:
             memory: "64Mi"
@@ -49,17 +47,9 @@ data:
   DB_NAME: myapp_db
   EMAIL_FROM_ADDRESS: Django LMS <chakravarthyashok41@gmail.com>
   EMAIL_HOST_USER: chakravarthyashok41@gmail.com
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: collegeapp-web-secrets
-  namespace: django
-type: Opaque
-data:
-  DB_USER: YXNob2sK
-  DB_PASSWORD: YXNob2sxMjMK
-  EMAIL_HOST_PASSWORD: QXNob2tAMTk5NDA3Cg==
+  DB_USER: ashok
+  DB_PASSWORD: ashok123
+  EMAIL_HOST_PASSWORD: Ashok@199407
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,37 @@
+version: '3'
+networks:
+  mynetwork:
+services:
+  # Django Application
+  web:
+    image: myweb
+    #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+# Database config
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=myapp_db
+      - DB_USER=ashok
+      - DB_PASSWORD=ashok123
+      - EMAIL_FROM_ADDRESS=Django LMS <chakravarthyashok41@gmail.com>
+      - EMAIL_HOST_USER=chakravarthyashok41@gmail.com
+      - EMAIL_HOST_PASSWORD=Ashok@199407
+    networks:
+      - mynetwork
+  # PostgreSQL Database
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: myapp_db
+      POSTGRES_USER: ashok
+      POSTGRES_PASSWORD: ashok123
+    networks:
+      - mynetwork
+volumes:
+  postgres_data:

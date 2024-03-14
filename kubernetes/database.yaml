@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collegeapp-db-deploymet
+  labels:
+    name: postgress
+    project: django
+    tier: db
+  namespace: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: postgress
+      project: django
+      tier: db
+  template:
+    metadata:
+      labels:
+        name: postgress
+        project: django
+        tier: db
+    spec:
+      containers:
+      - name: postgress
+        image: postgres:12
+        imagePullPolicy: Always
+        envFrom:
+        - secretKeyRef:
+            name: college-app-db-secrets 
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: college-app-db-secrets
+type: Opaque
+data:
+  POSTGRES_DB: bXlhcHBfZGIK
+  POSTGRES_USER: YXNob2sK
+  POSTGRES_PASSWORD: YXNob2sxMjMK
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: college-app-db-service
+spec:
+  selector:
+    name: postgress
+    project: django
+    tier: db 
+  ports:
+  - port: 5432
+    targetPort: 5432

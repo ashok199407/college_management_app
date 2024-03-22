@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: collegeapp-db-statefulset
+  namespace: myns
   labels:
     app: collegeapp
     tier: db
@@ -48,6 +49,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: collegeapp-db-secret
+  namespace: myns
 type: Opaque
 data:
   POSTGRES_DB: bXlhcHBfZGI=
@@ -58,6 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: collegeapp-db-service
+  namespace: myns
 spec:
   selector:
     app: collegeapp

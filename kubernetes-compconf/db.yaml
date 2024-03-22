@@ -33,7 +33,7 @@ spec:
             name: collegeapp-db-secret
         volumeMounts:
         - name: collegeapp-db-vol-claim
-          mountPath: /var/lib/postgresql/data
+          mountPath: /var/lib/postgresql/data/pgdata
   volumeClaimTemplates:
   - metadata:
       name: collegeapp-db-vol-claim

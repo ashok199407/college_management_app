@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: collegeapp-db-deploymet
+  namespace: django
   labels:
     app: postgress
     project: django
     tier: db
-  namespace: django
 spec:
   replicas: 1
   selector:

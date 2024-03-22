@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: collegeapp-db-statefulset
+  labels:
+    app: collegeapp
+    tier: db
+    env: dev
+spec:
+  selector:
+    matchLabels:
+      app: collegeapp
+      tier: db
+      env: dev
+  serviceName: collegeapp-db-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: collegeapp
+        tier: db
+        env: dev
+    spec:
+      containers:
+      - name: college-appdb-container
+        image: postgres:12
+        ports:
+        - containerPort: 5432
+          name: dbport
+        volumeMounts:
+        - name: postgres-vol-claim
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: collegeapp-db-vol-claim
+    spec:
+      storageClassName: ebs-sc
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: collegeapp-db-secret
+type: Opaque
+data:
+  POSTGRES_DB: bXlhcHBfZGI=
+  POSTGRES_USER: YXNob2sK
+  POSTGRES_PASSWORD: YXNob2sxMjM=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: college-app-db-service
+spec:
+  selector:
+    app: collegeapp
+    tier: db
+    env: dev
+  ports:
+  - port: 5432
+    targetPort: dbport 

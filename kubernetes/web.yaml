@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: collegeapp-web-deployment
-  namespace: django
   labels: # these labels are deployment labels
     app: college-management
     project: django
@@ -40,7 +39,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: collegeapp-web-configmap
-  namespace: django
 data:
   DB_HOST: college-app-db-service
   DB_PORT: "5432"
@@ -55,7 +53,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: collegeapp-web-service
-  namespace: django
 spec:
   type: LoadBalancer
   selector:

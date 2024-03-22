@@ -22,11 +22,14 @@ spec:
         env: dev
     spec:
       containers:
-      - name: college-appdb-container
+      - name: collegeapp-db-container
         image: postgres:12
         ports:
         - containerPort: 5432
           name: dbport
+        envFrom:
+        - secretRef:
+            name: collegeapp-collegeapp-db-secret
         volumeMounts:
         - name: postgres-vol-claim
           mountPath: /var/lib/postgresql/data
@@ -34,11 +37,11 @@ spec:
   - metadata:
       name: collegeapp-db-vol-claim
     spec:
-      storageClassName: ebs-sc
+      storageClassName: "ebs-sc"
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 2Gi
+          storage: 1Gi
 ---
 apiVersion: v1
 kind: Secret
@@ -61,4 +64,5 @@ spec:
     env: dev
   ports:
   - port: 5432
-    targetPort: dbport 
+    targetPort: dbport
+ 

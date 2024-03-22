@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collegeapp-web-deployment
+  # namespace: django
+  labels: # these labels are deployment labels
+    app: college-management
+    project: django
+    tier: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels: # these labels are used to find the pods. these lables should same as pod lables
+      app: college-management
+      project: django
+      tier: web
+  template:
+    metadata:
+      labels: # these labels are pod labels
+        app: college-management
+        project: django
+        tier: web
+    spec:
+      containers:
+      - name: django
+        image: ashokdockcloud/collegeapp:v1
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: collegeapp-web-configmap
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: collegeapp-web-configmap
+  namespace: django
+data:
+  DB_HOST: college-app-db-service
+  DB_PORT: "5432"
+  DB_NAME: myapp_db
+  EMAIL_FROM_ADDRESS: Django LMS <chakravarthyashok41@gmail.com>
+  EMAIL_HOST_USER: chakravarthyashok41@gmail.com
+  DB_USER: ashok
+  DB_PASSWORD: ashok123
+  EMAIL_HOST_PASSWORD: Ashok@199407
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: collegeapp-web-service
+  namespace: django
+spec:
+  type: LoadBalancer
+  selector:
+    app: college-management
+    project: django
+    tier: web
+  ports:
+  - protocol: TCP
+    port: 8000 #service-port
+    targetPort: 8000
+  

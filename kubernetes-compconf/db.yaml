@@ -13,7 +13,7 @@ spec:
       tier: db
       env: dev
   serviceName: collegeapp-db-service
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -29,9 +29,9 @@ spec:
           name: dbport
         envFrom:
         - secretRef:
-            name: collegeapp-collegeapp-db-secret
+            name: collegeapp-db-secret
         volumeMounts:
-        - name: postgres-vol-claim
+        - name: collegeapp-db-vol-claim
           mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
@@ -56,7 +56,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: college-app-db-service
+  name: collegeapp-db-service
 spec:
   selector:
     app: collegeapp

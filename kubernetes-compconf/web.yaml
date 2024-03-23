@@ -28,13 +28,14 @@ spec:
         envFrom:
         - configMapRef:
             name: collegeapp-web-configmap
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        volumeMounts:
+        - name: django-data
+          mountPath: /app/kubernetes
+      volumes:
+      - name: django-data
+        persistentVolumeClaim:
+          claimName: collegeapp-web-pvc
+        
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -66,4 +67,19 @@ spec:
   - protocol: TCP
     port: 8000 #service-port
     targetPort: 8000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: collegeapp-web-pvc
+  namespace: myns
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 5Gi
+
+
   

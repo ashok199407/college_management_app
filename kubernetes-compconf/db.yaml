@@ -33,13 +33,13 @@ spec:
         - secretRef:
             name: collegeapp-db-secret
         volumeMounts:
-        - name: collegeapp-db-vol-claim
+        - name: collegeapp-db-vct
           mountPath: /var/lib/postgresql/data/pgdata
   volumeClaimTemplates:
   - metadata:
-      name: collegeapp-db-vol-claim
+      name: collegeapp-db-vct
     spec:
-      storageClassName: "ebs-sc"
+      storageClassName: "efs-sc"
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:

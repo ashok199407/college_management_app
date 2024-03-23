@@ -38,6 +38,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: collegeapp-db-vct
+      namespace: myns
     spec:
       storageClassName: "efs-sc"
       accessModes: [ "ReadWriteOnce" ]
